@@ -11,8 +11,8 @@
 	</target>
 	
 	<target name="do.archive" depends="init">
-		<mkdir dir="temp/CKCodeMirror" />
-		<copy todir="temp/CKCodeMirror">
+		<mkdir dir="temp/ckcodemirror" />
+		<copy todir="temp/ckcodemirror">
 			<fileset dir=".">
 		      	<exclude name="builds/**"/>
 				<exclude name="build.xml"/>

@@ -19,7 +19,7 @@ component {
 	this.title 				= "CKCodeMirror";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
-	this.description 		= "Adds CodeMirror support to CKEditor";
+	this.description 		= "Adds CodeMirror support to CKEditor 4";
 	this.version			= "1.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
@@ -51,7 +51,6 @@ component {
 		
 		// map objects
 		binder.map("fileUtils@ckcodemirror").to("coldbox.system.core.util.FileUtils");
-
 	}
 
 	/**
@@ -88,8 +87,6 @@ component {
 			// override settings from contentbox custom setting
 			controller.getSetting("modules").CKCodeMirror.settings = deserializeJSON( setting.getvalue() );
 		}
-		// Regsiter for events
-		controller.getInterceptorService().registerInterceptor(interceptorObject=this);
 	}
 
 	/**

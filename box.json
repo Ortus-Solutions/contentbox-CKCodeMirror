@@ -1,6 +1,6 @@
 {
     "name":"ContentBox CKCodeMirror Extension",
-    "version":"2.0.0",
+    "version":"2.1.0",
     "slug":"CKCodeMirror",
     "location" : "https://github.com/contentbox-modules/CKCodeMirror/archive/master.zip",
     "author":"Ortus Solutions",

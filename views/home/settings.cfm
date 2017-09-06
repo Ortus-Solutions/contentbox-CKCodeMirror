@@ -19,12 +19,12 @@
 					<p>
 						Below you can modify the settings used by the CK Code Mirror module.
 					</p>
-					
+
 					#html.startForm( action="cbadmin.module.ckcodemirror.home.saveSettings", name="settingsForm" )#
 
 						<fieldset>
 							<legend><i class="fa fa-cogs"></i> <strong>Options</strong></legend>
-							
+
 							#html.select(
 								name="theme",
 								label="Theme:",
@@ -33,14 +33,48 @@
 								groupwrapper="div class='form-group'",
 								selectedValue=prc.settings.theme
 							)#
-						</fieldset>
+							</br>
+						    #html.select(
+								name="mode",
+								label="Mode:",
+								class="form-control input-lg",
+								options=prc.modes,
+								groupwrapper="div class='form-group'",
+								selectedValue=prc.settings.mode
+							)#
+							</br>
 
+							#html.inputField(
+								name="maxHighlightLineLength",
+								label='Max Highlight Line Length',
+							    class="form-control",
+			                    wrapper="div class=controls",
+			                    labelClass="control-label",
+			                    groupWrapper="div class=form-group",
+			                    value=prc.settings.maxHighlightLineLength
+							)#
+							</br>
+
+							<cfloop collection="#prc.settings#" item="key">
+									<!--- Show only bools as checkbox, label will be automatically splitted --->
+									 <cfif !isNumeric(prc.settings[key])
+									 	&& isboolean(prc.settings[key])>
+										 #html.checkbox(
+											 name    = "#key#",
+											 label	= "#rereplace(ReReplace(#key#,"\b(\w)","\u\1","all"),"([A-Z])"," \1","all")#:&nbsp&nbsp",
+											 checked	= #prc.settings[key]#
+										 )#
+										 <br />
+                                     </cfif>
+						    </cfloop>
+
+						</fieldset>
 						<!--- Submit --->
 						<div class="actionBar center">
-							#html.submitButton( 
+							#html.submitButton(
 								value="Save Settings",
 								class="btn btn-lg btn-primary",
-								title="Save Settings" 
+								title="Save Settings"
 							)#
 						</div>
 

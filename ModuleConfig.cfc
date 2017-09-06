@@ -24,8 +24,32 @@ component {
 
 		// Compressor Settings
 		settings = {
-			// Theme to use
-			theme = "xq-dark"
+			 "theme" = "xq-dark",
+			 "mode" = "htmlmixed",
+ 			 "autoCloseBrackets": true,
+             "autoCloseTags": true,
+             "autoFormatOnStart": false,
+             "autoFormatOnUncomment": true,
+             "continueComments": true,
+             "enableCodeFolding": true,
+             "enableCodeFormatting": true,
+             "enableSearchTools": true,
+             "highlightMatches": true,
+             "indentWithTabs": false,
+             "lineNumbers": true,
+             "lineWrapping": true,
+             "matchBrackets": true,
+             "matchTags": true,
+             "showAutoCompleteButton": true,
+             "showCommentButton": true,
+             "showFormatButton": true,
+             "showSearchButton": true,
+             "showTrailingSpace": true,
+             "showUncommentButton": true,
+             "styleActiveLine": true,
+             "useBeautifyOnStart": false,
+             "autoLoadCodeMirror": true,
+             "maxHighlightLineLength": 1000
 		};
 
 		// SES Routes
@@ -39,7 +63,7 @@ component {
 		// Interceptors
 		interceptors = [
 		];
-		
+
 		// map objects
 		binder.map( "fileUtils@ckcodemirror" ).to( "coldbox.system.core.util.FileUtils" );
 	}
@@ -58,10 +82,36 @@ component {
 		var settingService 	= wirebox.getInstance("SettingService@cb");
 		var args 			= { name="cbox-ckcodemirror" };
 		var allSettings 	= deserializeJSON( settingService.findWhere( criteria=args ).getValue() );
-		
-		arguments.interceptData.extraConfig &= "codemirror : { theme : '#allSettings.theme#' }";
+
+		arguments.interceptData.extraConfig &= "codemirror : {
+			theme : '#allSettings.theme#',
+			mode : '#allSettings.mode#',
+			autoCloseBrackets : #allSettings.autoCloseBrackets#,
+			autoCloseTags : #allSettings.autoCloseTags#,
+			lineNumbers : #allSettings.lineNumbers#,
+			autoFormatOnStart : #allSettings.autoFormatOnStart#,
+			autoFormatOnUncomment : #allSettings.autoFormatOnUncomment#,
+			continueComments : #allSettings.continueComments#,
+			enableCodeFolding : #allSettings.enableCodeFolding#,
+			enableSearchTools : #allSettings.enableSearchTools#,
+			highlightMatches : #allSettings.highlightMatches#,
+			indentWithTabs : #allSettings.indentWithTabs#,
+			lineWrapping : #allSettings.lineWrapping#,
+			matchBrackets : #allSettings.matchBrackets#,
+			matchTags : #allSettings.matchTags#,
+			showAutoCompleteButton : #allSettings.showAutoCompleteButton#,
+			showCommentButton : #allSettings.showCommentButton#,
+			showFormatButton : #allSettings.showFormatButton#,
+			showSearchButton : #allSettings.showSearchButton#,
+			showTrailingSpace : #allSettings.showTrailingSpace#,
+			showUncommentButton : #allSettings.showUncommentButton#,
+			styleActiveLine : #allSettings.styleActiveLine#,
+			useBeautifyOnStart : #allSettings.useBeautifyOnStart#,
+			autoLoadCodeMirror : #allSettings.autoLoadCodeMirror#,
+			maxHighlightLineLength : #allSettings.maxHighlightLineLength#
+		}";
 	}
-	
+
 	/**
 	* Fired when the module is registered and activated.
 	*/
@@ -81,9 +131,16 @@ component {
 		var setting 		= settingService.findWhere( criteria=args );
 		if( !isNull( setting ) ){
 			// override settings from contentbox custom setting
-			controller.getSetting( "modules" ).CKCodeMirror.settings = deserializeJSON( setting.getvalue() );
+			var allSettings = deserializeJSON( setting.getvalue() );
+
+			for (var key in allSettings){
+				if( structKeyExists( controller.getSetting( "modules" ).CKCodeMirror.settings, key ) ){
+					controller.getSetting( "modules" ).CKCodeMirror.settings[ key ] = allSettings[ key ];
+				}
+			}
 		}
 	}
+
 
 	/**
 	* Fired when the module is activated
@@ -103,7 +160,7 @@ component {
 		var ckeditorPluginsPath = controller.getSetting( "modules" )[ "contentbox-admin" ].path & "/modules/contentbox-ckeditor/includes/ckeditor/plugins/codemirror";
 		var fileUtils  			= wirebox.getInstance( "fileUtils@ckcodemirror" );
 		var pluginPath  		= controller.getSetting( "modules" )[ "CKCodeMirror" ].path & "/includes/codemirror";
-		
+
 		fileUtils.directoryCopy( source=pluginPath, destination=ckeditorPluginsPath );
 	}
 

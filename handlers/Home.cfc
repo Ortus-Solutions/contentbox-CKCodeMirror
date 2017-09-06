@@ -13,6 +13,8 @@ component{
 		// Avaialble themes
 		prc.themes = ["ambiance-mobile", "ambiance", "blackboard", "cobalt", "eclipse", "elegant", "erlang-dark", "lesser-dark",
 					  "monokai", "neat", "night", "rubyblue", "solarized", "twilight", "vibrant-link" ,"xq-dark"];
+		prc.modes  = ["bbcode", "bbcodemixed","htmlmixed","text/html","application/x-httpd-php","text/javascript"];
+
 		// view
 		event.setView( "home/settings" );
 	}
@@ -26,7 +28,9 @@ component{
 			// save only sent in setting keys
 			if( structKeyExists( rc, key ) ){
 				prc.settings[ key ] = rc[ key ];
-			}
+			} else
+				prc.settings[ key ] = false;
+
 		}
 
 		// Save settings

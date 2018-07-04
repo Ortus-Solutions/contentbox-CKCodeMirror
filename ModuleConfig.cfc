@@ -19,6 +19,7 @@ component {
 	this.layoutParentLookup = true;
 	// Module Entry Point
 	this.entryPoint			= "ckcodemirror";
+	this.aliases 			= [ "ckcodemirror" ];
 
 	function configure(){
 
@@ -64,8 +65,6 @@ component {
 		interceptors = [
 		];
 
-		// map objects
-		binder.map( "fileUtils@ckcodemirror" ).to( "coldbox.system.core.util.FileUtils" );
 	}
 
 	/**
@@ -158,10 +157,9 @@ component {
 
 		// Install the ckeditor plugin
 		var ckeditorPluginsPath = controller.getSetting( "modules" )[ "contentbox-admin" ].path & "/modules/contentbox-ckeditor/includes/ckeditor/plugins/codemirror";
-		var fileUtils  			= wirebox.getInstance( "fileUtils@ckcodemirror" );
-		var pluginPath  		= controller.getSetting( "modules" )[ "CKCodeMirror" ].path & "/includes/codemirror";
+		var pluginPath  		= moduleMapping & "/includes/codemirror";
 
-		fileUtils.directoryCopy( source=pluginPath, destination=ckeditorPluginsPath );
+		directoryCopy( source=pluginPath, destination=ckeditorPluginsPath, recurse=true );
 	}
 
 	/**
@@ -186,7 +184,6 @@ component {
 		}
 		// Uninstall the ckeditor plugin
 		var ckeditorPluginsPath = controller.getSetting( "modules" )[ "contentbox-admin" ].path & "/modules/contentbox-ckeditor/includes/ckeditor/plugins/codemirror";
-		var fileUtils  			= wirebox.getInstance( "fileUtils@ckcodemirror" );
-		fileUtils.directoryRemove( path=ckeditorPluginsPath, recurse=true );
+		directoryDelete( path=ckeditorPluginsPath, recurse=true );
 	}
 }
